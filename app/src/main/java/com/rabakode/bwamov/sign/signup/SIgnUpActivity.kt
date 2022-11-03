@@ -9,15 +9,19 @@ import android.widget.Toast
 import com.google.firebase.database.*
 import com.rabakode.bwamov.R
 import com.rabakode.bwamov.sign.signin.User
+import com.rabakode.bwamov.util.Preferences
 
-class SIgnUpActivity : AppCompatActivity() {
+class   SIgnUpActivity : AppCompatActivity() {
 
     private lateinit var sUsername: String
     private lateinit var sPassword: String
     private lateinit var sName: String
     private lateinit var sEmail: String
 
+    lateinit var preferences: Preferences
+
     private lateinit var mFirebaseInstance: FirebaseDatabase
+    private lateinit var mFirebaseDatabase: DatabaseReference
     private lateinit var mDatabaseReference: DatabaseReference
     private lateinit var mDatabase: DatabaseReference
 
@@ -25,7 +29,10 @@ class SIgnUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+        preferences = Preferences(this)
+
         mFirebaseInstance = FirebaseDatabase.getInstance()
+        mFirebaseDatabase = mFirebaseInstance.getReference("User")
         mDatabase = FirebaseDatabase.getInstance().getReference()
         mDatabaseReference = mFirebaseInstance.getReference("User")
 
@@ -79,12 +86,19 @@ class SIgnUpActivity : AppCompatActivity() {
     }
 
     private fun checkingUsername(sUsername: String, data: User) {
-        mDatabaseReference.child(sUsername).addValueEventListener(object : ValueEventListener{
+        mFirebaseDatabase.child(sUsername).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 var user = dataSnapshot.getValue(User::class.java)
                 if(user == null){
-                    mDatabaseReference.child(sUsername).setValue(data)
-                    startActivity(Intent(this@SIgnUpActivity, SignUpPhotoActivity::class.java).putExtra("nama", data.nama))
+                    mFirebaseDatabase.child(sUsername).setValue(data)
+
+                    preferences.setValue("nama", data.nama.toString())
+                    preferences.setValue("user", data.username.toString())
+                    preferences.setValue("saldo", data.saldo.toString())
+                    preferences.setValue("url", "")//preferences.setValue("password", "")
+                    preferences.setValue("email", data.email.toString())
+                    preferences.setValue("status", "1")
+                    startActivity(Intent(this@SIgnUpActivity, SignUpPhotoActivity::class.java).putExtra("data", data))
                 }
                 else{
                     Toast.makeText(this@SIgnUpActivity,"User sudah digunakan", Toast.LENGTH_LONG).show()

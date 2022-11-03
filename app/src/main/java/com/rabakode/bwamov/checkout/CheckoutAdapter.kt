@@ -31,8 +31,8 @@ class CheckoutAdapter(private var data: List<Checkout>,
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
 
-        var tvKursi: TextView = itemView.findViewById(R.id.tv_kursi)
-        var tvHarga: TextView = itemView.findViewById(R.id.tv_harga)
+        var tvKursi: TextView = view.findViewById(R.id.tv_kursi)
+        var tvHarga: TextView = view.findViewById(R.id.tv_harga)
 
         fun bindItem(data:Checkout, listener: (Checkout) -> Unit, context: Context){
 

@@ -28,7 +28,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
 
     private lateinit var mDatabase: DatabaseReference
-    private var datalist= ArrayList<Plays>() //untuk load foto
+    private var datalist= ArrayList<Plays>() //untuk load foto dan nama actor
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -53,8 +53,9 @@ class TicketFragment : Fragment() {
                     val film = getDataSnapshot.getValue(Film::class.java)
                     datalist.add(film!!)
                 }
-                rvTicketToday.adapter = ComingSoonAdapter(datalist){        //pakai comingsoon karena bentuknya sama
-                        startActivity(Intent(context, TicketActivity::class.java).putExtra("data", it))
+                rvTicketToday.adapter = ComingSoonAdapter(datalist){
+                    //pakai comingsoon karena bentuknya sama
+                    startActivity(Intent(context, TicketActivity::class.java).putExtra("data", it))
                 }
 
                 tvTTotalMovies.setText("${datalist.size} Movies")

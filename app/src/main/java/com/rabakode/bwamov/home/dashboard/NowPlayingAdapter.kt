@@ -31,15 +31,16 @@ class NowPlayingAdapter(private var data: List<Film>,
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
 
-        var tvTitle: TextView = itemView.findViewById(R.id.tv_kursi)
-        var tvGenre: TextView = itemView.findViewById(R.id.tv_genre)
-        var tvRate: TextView = itemView.findViewById(R.id.tv_rate)
-        var ivPoster: ImageView = itemView.findViewById(R.id.iv_poster)
+        var tvTitle: TextView = view.findViewById(R.id.tv_kursi)
+        //var tvTitle: TextView = itemView.findViewById(R.id.tv_kursi)
+        var tvGenre: TextView = view.findViewById(R.id.tv_genre)
+        var tvRate: TextView = view.findViewById(R.id.tv_rate)
+        var ivPoster: ImageView = view.findViewById(R.id.iv_poster)
 
         fun bindItem(data:Film, listener: (Film) -> Unit, context: Context){
-            tvTitle.setText(data.judul)
-            tvGenre.setText(data.genre)
-            tvRate.setText(data.rating)
+            tvTitle.text = data.judul
+            tvGenre.text = data.genre
+            tvRate.text = data.rating
 
             Glide.with(context)
                 .load(data.poster)

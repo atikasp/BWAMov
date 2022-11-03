@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rabakode.bwamov.R
 import com.rabakode.bwamov.model.Checkout
+import com.rabakode.bwamov.model.Film
 import com.rabakode.bwamov.util.Preferences
 
 class CheckoutActivity : AppCompatActivity() {
 
-    lateinit var tvSaldo: TextView
+    //lateinit var tvSaldo: TextView
     lateinit var rvCheckoutKursi: RecyclerView
     lateinit var btnBayar: Button
     lateinit var btnBatal: Button
@@ -26,7 +27,7 @@ class CheckoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_checkout)
 
-        tvSaldo = findViewById(R.id.tv_saldo)
+        //tvSaldo = findViewById(R.id.tv_saldo)
         rvCheckoutKursi = findViewById(R.id.rv_checkout_kursi)
         btnBayar = findViewById(R.id.btn_bayar)
         btnBatal = findViewById(R.id.btn_batal_to_home)

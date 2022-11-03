@@ -1,15 +1,18 @@
 package com.rabakode.bwamov.home.dashboard
 
+
 import android.content.Intent
 import android.os.Build.ID
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.PixelCopy.request
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -47,8 +50,7 @@ class DashboardFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        preferences =
-            activity?.let { Preferences(it.applicationContext) }!! //cek disini juga pengganti requireActivity
+        preferences = Preferences(requireActivity().applicationContext)  //cek disini juga pengganti requireActivity
         mDatabase = FirebaseDatabase.getInstance().getReference("Film")
 
         tvNama = requireView().findViewById(R.id.tv_nama)
@@ -58,7 +60,7 @@ class DashboardFragment : Fragment() {
         rvComingsoon = requireView().findViewById(R.id.rv_comingsoon)
 
         tvNama.setText(preferences.getValues("nama"))
-        if(preferences.getValues("saldo").equals("")){
+        if(!preferences.getValues("saldo").equals("")){
             currency(preferences.getValues("saldo")!!.toDouble(), tvSaldo)
         }
 
@@ -79,10 +81,9 @@ class DashboardFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 datalist.clear()
                 for (getDataSnapshot in dataSnapshot.children){
-                    var film = getDataSnapshot.getValue(Film::class.java)
-                    if (film != null) {
-                        datalist.add(film)
-                    }
+                    val film = getDataSnapshot.getValue(Film::class.java)
+                    datalist.add(film!!)
+
                 }
                 rvNowplaying.adapter = NowPlayingAdapter(datalist){
                     //mengirim data ke detail activity
@@ -104,7 +105,7 @@ class DashboardFragment : Fragment() {
 
     //convert format uang
     private fun currency(harga: Double, text: TextView){
-        val localID = Locale("in", ID)
+        val localID = Locale("in", "ID")
         val formatUang = NumberFormat.getCurrencyInstance(localID)
         text.setText(formatUang.format(harga))
 
